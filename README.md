@@ -6,7 +6,7 @@ Basic orbital warfare game, inspired by John Lumpkin's Human Reach novels.
 The Pink ship and White ship are battling it out high above Earth. Each ship has a laser and coilgun. Ships flash red when they're hit, and in future versions, will have a limited amount of health, and limited fuel/weapons.
 
 <div align="center">
-  <a href="hhttps://www.youtube.com/watch?v=Nz3lWNP6NUA"><img src="https://img.youtube.com/vi/Nz3lWNP6NUA/0.jpg" alt="Sample Video"></a>
+  <a href="https://www.youtube.com/watch?v=Nz3lWNP6NUA"><img src="https://img.youtube.com/vi/Nz3lWNP6NUA/0.jpg" alt="Sample Video"></a>
 </div>
 
 
