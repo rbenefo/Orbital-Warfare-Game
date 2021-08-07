@@ -6,7 +6,7 @@ The Pink ship and White ship are battling it out high above Earth. Each ship has
 
 ## How to play
 This was created using [Processing.py](https://py.processing.org/); to play, download the repo and open it in Processing. The controls are below:
-## Camera controls:
+### Camera controls:
 - Zoom in/out: Scroll
 - Pan: Click and drag
 
@@ -24,5 +24,7 @@ This was created using [Processing.py](https://py.processing.org/); to play, dow
 - Turn counter-clockwise: LEFT
 - Turn clockwise: RIGHT
 
+## Basic Strategy
+Lasers and coilguns deal the same amount of damage; however, coilguns are slow while lasers arrive instantaneously. Since lasers can destroy incoming coilgun shells, a useful tactic (taken straight from John Lumpkin's books), is to think about coilguns as creating "terrain" that the enemy ship needs to navigate. To prevent the enemy ship from bringing its laser to bear on you, send some coilgun shells their way to force them either to turn and thrust to dodge, or turn and fire directly at the incoming shells.
 
 Enjoy!
