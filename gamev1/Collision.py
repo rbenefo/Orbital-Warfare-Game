@@ -1,3 +1,5 @@
+import random
+
 class Collision:
     def __init__(self):
         #further optimization-- implement quad trees 
@@ -13,8 +15,9 @@ class Collision:
         y0 = coilgun_round.pos[1]
         distance = abs((x2 - x1)*(y1-y0)-(x1-x0)*(y2-y1))/sqrt((x2-x1)**2+(y2-y1)**2)
         collision = False
-        if distance < coilgun_round.s*2:
-            collision = True
+        if distance < coilgun_round.s:
+            if random.random() < 0.1: #10% probability of coilgun round destruction 
+                collision = True
         return collision
     
     def line_line(self, line1, line2):
