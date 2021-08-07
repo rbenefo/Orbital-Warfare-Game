@@ -69,23 +69,24 @@ class Game:
                     coilgun_round.draw()
                     if rm:
                         ship.coilgun_rounds.pop(cidx)
-            
         for idx, ship in self.ships.items():
             for laserid, laser in laser_dict.items():
                 for cidx, coilgun_round in ship.coilgun_rounds.items():
                     if self.collision.laser_coilgun_check(laser, coilgun_round):
                         ship.coilgun_rounds.pop(cidx)
-                        continue
-                    for idx2, ship2 in self.ships.items():
-                        collision = self.collision.coilgun_spacecraft_collision_check(coilgun_round, ship2)
-                        if collision:
-                            ship.coilgun_rounds.pop(cidx)
-                            ship2.hit = True
+
+        for idx, ship in self.ships.items():
+            for cidx, coilgun_round in ship.coilgun_rounds.items():
+                for idx2, ship2 in self.ships.items():
+                    collision = self.collision.coilgun_spacecraft_collision_check(coilgun_round, ship2)
+                    if collision:
+                        ship.coilgun_rounds.pop(cidx)
+                        ship2.hit = True
         for laserid, laser in laser_dict.items():
-            for idx, ship in self.ships.items():
-                collision = self.collision.laser_spacecraft_check(laser, ship)
-                if collision:
-                    ship.hit = True
+                for idx, ship in self.ships.items():
+                    collision = self.collision.laser_spacecraft_check(laser, ship)
+                    if collision:
+                        ship.hit = True
         for idx, ship in self.ships.items():
             ship.draw()
             ship.hit = False
