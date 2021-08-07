@@ -14,7 +14,7 @@ class Game:
         self.addShip(maxthrust = 0.00005, m = 10, x = 100, y = 240, rgb = color(255, 0, 255))
         self.addShip(maxthrust = 0.00005, m = 10, x = 150, y = 240, rgb = color(255, 255, 255))
         
-        self.planet = Planet(self.width/2, self.height/2, 100, m = 0.3)
+        self.planet = Planet(self.width/2, self.height/2, 20, m = 0.1)
         self.lastDraw = millis()
         
         self.collision = Collision()
@@ -27,34 +27,35 @@ class Game:
             ship_a_dict[idx] = a
         laser_dict = {}
         if keyPressed:
-            if key == "t": #ship1 thrust
+            if key == "d": #ship1 right
+                self.ships[0].turnRight()
+            if key == "a": #ship1 left
+                self.ships[0].turnLeft()
+                
+            if key == "w": #ship1 thrust
                 thrust_accel_vec_0 = self.ships[0].thrust()
                 ship_a_dict[0].add(thrust_accel_vec_0)
-            if key == "p": #ship2 thrust
-                thrust_accel_vec_1 = self.ships[1].thrust()
-                ship_a_dict[1].add(thrust_accel_vec_1)
-            if key == "d": #ship2 right
-                self.ships[1].turnRight()
-            if key == "a": #ship2 left
-                self.ships[1].turnLeft()
 
-            if key == "f":
+            if key == "q":
                 self.ships[0].fire()
             if key == "e":
                 beg, ending = self.ships[0].fireLaser()
                 laser_dict[0] = (beg, ending)
 
-            if key == "l":
+            if key == "/":
                 self.ships[1].fire()
-            if key == "k":
+            if key == ".":
                 beg, ending = self.ships[1].fireLaser()
                 laser_dict[1] = (beg, ending)
-
             if key == CODED:
                 if keyCode == RIGHT:
-                    self.ships[0].turnRight()
+                    self.ships[1].turnRight()
                 elif keyCode == LEFT:
-                    self.ships[0].turnLeft()
+                    self.ships[1].turnLeft()
+                elif keyCode == SHIFT: #ship2 thrust
+                    thrust_accel_vec_1 = self.ships[1].thrust()
+                    ship_a_dict[1].add(thrust_accel_vec_1)
+    
         m = millis()
         dt = m - self.lastDraw
 
@@ -101,9 +102,9 @@ class Game:
 
 
     def handleKeyReleased(self, key):
-        if key == "t":
+        if key == "w":
             self.ships[0].turnOffThrust()
-        if key == "p":
+        if keyCode == SHIFT:
             self.ships[1].turnOffThrust()
 
 class PhysicsEngine:

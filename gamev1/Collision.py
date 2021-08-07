@@ -8,7 +8,7 @@ class Collision:
         x1 = laser[0][0]
         y1 = laser[0][1]
         x2 = laser[1][0]
-        y2 = laser[1][0]
+        y2 = laser[1][1]
         x0 = coilgun_round.pos[0]
         y0 = coilgun_round.pos[1]
         distance = abs((x2 - x1)*(y1-y0)-(x1-x0)*(y2-y1))/sqrt((x2-x1)**2+(y2-y1)**2)
@@ -105,7 +105,6 @@ class Collision:
         
         
         if distance < coilgun_round.s:
-            print("hesdfm")
             collision = True
             
         return collision

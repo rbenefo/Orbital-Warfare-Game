@@ -4,10 +4,10 @@ class SpaceCraftPrimitive(object):
     def __init__(self, x, y, rgb):
         self.pos= PVector(x,y)
         self.theta = 0
-        self.vel = PVector(0,0.015)
+        self.vel = PVector(0,0.02)
         self.accel = PVector(0,0)
-        self.h = 10
-        self.w = 30
+        self.h = 8
+        self.w = 20
         self.color = rgb
         self.thrusting = False
         
@@ -52,12 +52,24 @@ class SpaceCraftPrimitive(object):
         translate(self.pos[0], self.pos[1])
         rotate(self.theta)
         noStroke()
+        
+        #Thruster burn
         if self.thrusting:
             pushMatrix()
             fill(225, 165, 0)
             translate(self.w/2, 0)
-            circle(0, 0, self.h)
+            ellipse(0, 0, self.h*2, self.h)
             popMatrix()
+        
+        pushMatrix()
+        if not self.hit:
+            fill(225, 226,227)
+        else:
+            fill(self.hit_color)
+        translate(-self.w/2, 0)
+        circle(0, 0, self.h)
+        popMatrix()
+
         if not self.hit:
             fill(self.color)
         else:
