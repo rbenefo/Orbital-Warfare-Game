@@ -38,7 +38,6 @@ def keyReleased():
         
 def draw():
     background(0, 0, 0);
-    print(bx)
     translate(bx, by)
     scale(scale_factor)
     game.draw(keyPressed)
