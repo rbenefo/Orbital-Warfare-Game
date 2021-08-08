@@ -5,7 +5,7 @@ class SpaceCraftPrimitive(object):
     def __init__(self, x, y, rgb):
         self.pos= PVector(x,y)
         self.theta = 0
-        self.vel = PVector(0,0.02)
+        self.vel = PVector(0,0.015)
         self.accel = PVector(0,0)
         self.h = 8
         self.w = 20
@@ -29,16 +29,16 @@ class SpaceCraftPrimitive(object):
         self.alive = True #alive
         self.type = "spacecraft"
         
-        self.fuel_level = 1
-        self.max_fuel = 1
+        self.fuel_level = 2
+        self.max_fuel = 2
     
     def fire(self):
         coilgun_pos = self.pos.copy()
         currHeadingVec = PVector.fromAngle(self.theta)
         currHeadingVec.rotate(PI)
-        shift = PVector.mult(currHeadingVec, self.w/2+4)
+        shift = PVector.mult(currHeadingVec, self.w/2+10)
         coilgun_pos.add(shift)
-        coilgun_vel = currHeadingVec.mult(0.05)
+        coilgun_vel = currHeadingVec.mult(0.03)
         coilgun_vel.add(self.vel)
         coilgun_round = CoilgunRound(coilgun_pos, coilgun_vel)
         self.coilgun_id += 1
@@ -125,10 +125,10 @@ class SpaceCraft(SpaceCraftPrimitive):
             
     def turnRight(self):
         if self.fuel_level >= 0:
-            self.theta += 0.05
+            self.theta += 0.02
         
     def turnLeft(self):
         # print("turning left")
         if self.fuel_level >= 0:
-            self.theta -= 0.05
+            self.theta -= 0.02
             

@@ -4,8 +4,8 @@ from Camera import Camera
 height  = int(480*1.5)
 width = 640*2
 
-        
-game = Game(width, height)
+
+
 scale_factor = 1
 xOffset = 0
 yOffset = 0
@@ -17,6 +17,10 @@ def setup():
     bx = width/2
     by = height/2
     size(width, height)
+    global img, game
+    img = loadImage("planet2.png")
+    game = Game(width, height, img)
+
 
 def mouseWheel(event):
     global scale_factor
@@ -40,7 +44,7 @@ def keyReleased():
     game.handleKeyReleased(key)
 
 def draw():
-    background(0, 0, 0)
+    background(0,0,0)
     game.updateGUI()
     translate(bx, by)
     scale(scale_factor)

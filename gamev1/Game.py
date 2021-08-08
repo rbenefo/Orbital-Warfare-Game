@@ -5,7 +5,7 @@ from GUI import GUI
 
 
 class Game:
-    def __init__(self, width, height):
+    def __init__(self, width, height, img):
         self.height  = height
         self.width = width
         
@@ -14,10 +14,10 @@ class Game:
         self.ships = {}
         self.ship_idx = -1
         
-        self.addShip(maxthrust = 0.00005, m = 10, x = 200, y = 240, rgb = color(255, 0, 255))
-        self.addShip(maxthrust = 0.00005, m = 10, x = 300, y = 240, rgb = color(255, 255, 255))
+        self.addShip(maxthrust = 0.0001, m = 10, x = 200, y = 240, rgb = color(255, 0, 255))
+        self.addShip(maxthrust = 0.0001, m = 10, x = 300, y = 240, rgb = color(255, 255, 255))
         
-        self.planet = Planet(self.width/2, self.height/2, 20, m = 0.1)
+        self.planet = Planet(self.width/2, self.height/2, 100, m = 0.15, img = img)
         self.lastDraw = millis()
         
         self.collision = Collision()
@@ -29,6 +29,8 @@ class Game:
         ship_a_dict = {}
         for idx, ship in self.ships.items():
             a, rm = self.physics.calcAccel(ship, self.planet)
+            if rm:
+                ship.health = 0
             ship_a_dict[idx] = a
         laser_dict = {}
         if keyPressed:
@@ -151,7 +153,7 @@ class PhysicsEngine:
         rm = False
         r = PVector.sub(obj.pos, planet.pos)
         distance = r.mag()
-        if distance <= planet.s/2 or distance >= 1000:
+        if distance <= planet.s/2:
             rm = True
         a = -(self.G*planet.mass)/distance**2
         accel_vec = r.normalize().mult(a)
@@ -201,7 +203,7 @@ class DamageModel:
         return damage
     
     def laser_hit(self, relPos):
-        damage = 1/(0.1*relPos)*0.00001
+        damage = 1/(0.5*relPos)*0.00001
         if damage > 0.03:
             damage = 0.03
         print(damage)

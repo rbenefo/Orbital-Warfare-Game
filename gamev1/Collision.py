@@ -33,8 +33,8 @@ class Collision:
         x1 = line1[0][0]
         y1 = line1[0][1]
         
-        uA = ((x4 - x3)*(y1-y3)-(y4-y3)*(x1-x3))/((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1))
-        uB = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1))
+        uA = float((x4 - x3)*(y1-y3)-(y4-y3)*(x1-x3))/float((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1))
+        uB = float((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / float((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1))
         collision = False
         if uA >= 0 and uA <= 1 and uB >= 0 and uB <= 1:
             collision = True
