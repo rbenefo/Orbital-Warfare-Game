@@ -1,5 +1,5 @@
 # Orbital-Warfare-Game
-Basic orbital warfare game, inspired by John Lumpkin's Human Reach novels.
+Basic 2D orbital warfare game with Newtonian physics, inspired by John Lumpkin's Human Reach novels.
 
 
 ## About
@@ -33,6 +33,7 @@ This was created using [Processing.py](https://py.processing.org/); to play, dow
 ### Mechanics:
 - Temperature: Temperature rises when ships thrust, or use their lasers. If the temperature gauge gets completely full, the ship overheats and dies.
 - Fuel: Fuel is used when the ships thrust. If the ship runs out of fuel, it will stop being able to maneuver.
+- Damage: Laser damage is a function of distance; the closer you are to the target, the more damage the laser will cause. Coilgun damage is a function of relative velocity-- the higher the relative velocity between the coilgun round and a ship upon impact, the greater the damage.
 
 
 ## Basic Strategy
