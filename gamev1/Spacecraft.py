@@ -124,9 +124,11 @@ class SpaceCraft(SpaceCraftPrimitive):
         return accel_vec
             
     def turnRight(self):
-        self.theta += 0.05
+        if self.fuel_level >= 0:
+            self.theta += 0.05
         
     def turnLeft(self):
         # print("turning left")
-        self.theta -= 0.05
+        if self.fuel_level >= 0:
+            self.theta -= 0.05
             
