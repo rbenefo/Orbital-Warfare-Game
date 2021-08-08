@@ -74,7 +74,6 @@ class Collision:
         for rect_line in rect_lines:
             collision = self.line_line(line0, rect_line)
             if collision:
-                print("laser hit!")
                 return collision
             
     def coilgun_spacecraft_collision_check(self, coilgun_round, space_craft):

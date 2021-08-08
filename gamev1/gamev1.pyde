@@ -1,14 +1,22 @@
 from Game import Game
 from Camera import Camera
+
 height  = int(480*1.5)
 width = 640*2
 
+        
 game = Game(width, height)
 scale_factor = 1
 xOffset = 0
 yOffset = 0
 bx = 0
 by = 0
+
+
+def setup():
+    bx = width/2
+    by = height/2
+    size(width, height)
 
 def mouseWheel(event):
     global scale_factor
@@ -26,18 +34,14 @@ def mousePressed():
     global xOffset, yOffset
     xOffset = mouseX-bx
     yOffset = mouseY-by
-    
-def setup():
-    bx = width/2
-    by = height/2
-    size(width, height)
 
 
 def keyReleased():
     game.handleKeyReleased(key)
-        
+
 def draw():
-    background(0, 0, 0);
+    background(0, 0, 0)
+    game.updateGUI()
     translate(bx, by)
     scale(scale_factor)
     game.draw(keyPressed)
