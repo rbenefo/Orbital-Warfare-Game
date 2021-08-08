@@ -14,8 +14,8 @@ class Game:
         self.ships = {}
         self.ship_idx = -1
         
-        self.addShip(maxthrust = 0.0001, m = 10, x = 200, y = 240, rgb = color(255, 0, 255))
-        self.addShip(maxthrust = 0.0001, m = 10, x = 300, y = 240, rgb = color(255, 255, 255))
+        self.addShip(maxthrust = 0.0001, m = 10, pos = PVector(200, 240),vel = PVector(0, 0.015), rgb = color(255, 0, 255))
+        self.addShip(maxthrust = 0.0001, m = 10, pos = PVector(600, 240),vel = PVector(0.03, -0.01), rgb = color(255, 255, 255))
         
         self.planet = Planet(self.width/2, self.height/2, 100, m = 0.15, img = img)
         self.lastDraw = millis()
@@ -117,7 +117,8 @@ class Game:
         for idx, ship in self.ships.items():
             ship.draw()
             ship.hit = False
-            self.physics.drawPath(ship, self.planet) #later optimization-- only draw path if thrust has been executed?
+            if ship.alive:
+                self.physics.drawPath(ship, self.planet) #later optimization-- only draw path if thrust has been executed?
         self.lastDraw = m
 
     def updateGUI(self):
@@ -132,8 +133,8 @@ class Game:
                 self.gui.update_white_gui(heatpercent, healthpercent, fuelpercent)
                 
         
-    def addShip(self, maxthrust, m, x, y, rgb):
-        ship = SpaceCraft(maxthrust, m, x, y, rgb)
+    def addShip(self, maxthrust, m, pos, vel, rgb):
+        ship = SpaceCraft(maxthrust, m, pos, vel, rgb)
         self.ship_idx += 1
         self.ships[self.ship_idx] = ship
 
@@ -155,6 +156,8 @@ class PhysicsEngine:
         distance = r.mag()
         if distance <= planet.s/2:
             rm = True
+        if obj.type == "coilgun" and distance > 1000:
+            rm  = True
         a = -(self.G*planet.mass)/distance**2
         accel_vec = r.normalize().mult(a)
         return accel_vec, rm
@@ -203,8 +206,7 @@ class DamageModel:
         return damage
     
     def laser_hit(self, relPos):
-        damage = 1/(0.5*relPos)*0.00001
+        damage = 1.0/float(0.5*relPos)*0.001
         if damage > 0.03:
             damage = 0.03
-        print(damage)
         return damage

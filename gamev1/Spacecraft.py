@@ -2,10 +2,10 @@ from Coilgun import CoilgunRound
 import math
 
 class SpaceCraftPrimitive(object):
-    def __init__(self, x, y, rgb):
-        self.pos= PVector(x,y)
+    def __init__(self, pos, vel, rgb):
+        self.pos= pos
         self.theta = 0
-        self.vel = PVector(0,0.015)
+        self.vel = vel
         self.accel = PVector(0,0)
         self.h = 8
         self.w = 20
@@ -38,7 +38,7 @@ class SpaceCraftPrimitive(object):
         currHeadingVec.rotate(PI)
         shift = PVector.mult(currHeadingVec, self.w/2+10)
         coilgun_pos.add(shift)
-        coilgun_vel = currHeadingVec.mult(0.03)
+        coilgun_vel = currHeadingVec.mult(0.04)
         coilgun_vel.add(self.vel)
         coilgun_round = CoilgunRound(coilgun_pos, coilgun_vel)
         self.coilgun_id += 1
