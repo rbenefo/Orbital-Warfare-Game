@@ -15,7 +15,7 @@ class Game:
         self.ship_idx = -1
         
         self.addShip(maxthrust = 0.00005, m = 10, x = 200, y = 240, rgb = color(255, 0, 255))
-        self.addShip(maxthrust = 0.00005, m = 10, x = 800, y = 240, rgb = color(255, 255, 255))
+        self.addShip(maxthrust = 0.00005, m = 10, x = 300, y = 240, rgb = color(255, 255, 255))
         
         self.planet = Planet(self.width/2, self.height/2, 20, m = 0.1)
         self.lastDraw = millis()
@@ -201,5 +201,8 @@ class DamageModel:
         return damage
     
     def laser_hit(self, relPos):
-        damage = relPos*100
+        damage = 1/(0.1*relPos)*0.00001
+        if damage > 0.03:
+            damage = 0.03
+        print(damage)
         return damage
