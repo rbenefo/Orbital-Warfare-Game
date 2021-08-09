@@ -4,7 +4,7 @@ class CoilgunRound:
         self.vel = vel
         self.accel = PVector(0,0)
         self.type = "coilgun"
-        self.s = 3
+        self.s = 2
     def applyAccel(self, accel):
         self.accel = accel
         

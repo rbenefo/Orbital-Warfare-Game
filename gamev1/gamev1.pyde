@@ -11,6 +11,7 @@ class Sounds:
         self.THRUST = minim.loadFile("thrust.wav")
         self.LASER = minim.loadFile("laser.wav")
         self.CANNON = minim.loadFile("cannon.wav")
+        self.HISS = minim.loadFile("hiss.wav")
     
     
 

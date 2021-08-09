@@ -65,6 +65,14 @@ class Game:
                 if self.ships[1].alive:
                     beg, ending = self.ships[1].fireLaser()
                     laser_dict[1] = (beg, ending)
+                    
+            if key == "r":
+                if self.ships[0].alive:
+                    self.ships[0].angular_vel = 0
+            if key == ENTER:
+                if self.ships[1].alive:
+                    self.ships[1].angular_vel = 0
+
             if key == CODED:
                 if keyCode == RIGHT:
                     if self.ships[1].alive:
@@ -145,8 +153,12 @@ class Game:
 
     def handleKeyReleased(self, key):
         if key == "w":
+            self.ships[0].sounds.THRUST.pause()
+            self.ships[0].sounds.THRUST.rewind()
             self.ships[0].turnOffThrust()
         if keyCode == SHIFT:
+            self.ships[1].sounds.THRUST.pause()
+            self.ships[1].sounds.THRUST.rewind()
             self.ships[1].turnOffThrust()
         if key == "e":
             self.ships[0].sounds.LASER.rewind()
@@ -156,6 +168,13 @@ class Game:
             self.ships[0].sounds.CANNON.rewind()
         if key == "/":
             self.ships[1].sounds.CANNON.rewind()
+            
+        if key == "a" or key == "d":
+            self.ships[1].sounds.HISS.pause()
+            self.ships[0].sounds.HISS.rewind()
+        if keyCode == LEFT or keyCode == RIGHT:
+            self.ships[1].sounds.HISS.pause()
+            self.ships[1].sounds.HISS.rewind()
 class PhysicsEngine:
     def __init__(self, width, height):
         self.G = 1 #gravitational constant
@@ -177,6 +196,13 @@ class PhysicsEngine:
         obj.vel.add(dv)
         dp = PVector.mult(obj.vel, dt)
         obj.pos.add(dp)
+        if obj.type == "spacecraft":
+            obj.theta += obj.angular_vel*dt
+            damping_const = 0.000005
+            if obj.angular_vel < 0:
+                obj.angular_vel+=  damping_const
+            elif obj.angular_vel > 0:
+                obj.angular_vel-=  damping_const
 
 
     def drawPath(self, obj, planet):

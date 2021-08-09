@@ -33,6 +33,7 @@ class SpaceCraftPrimitive(object):
         
         self.fuel_level = 2
         self.max_fuel = 2
+        self.angular_vel = 0
         
         self.sounds = sounds
     def fire(self):
@@ -130,16 +131,18 @@ class SpaceCraft(SpaceCraftPrimitive):
         return accel_vec
     
     def turnOffThrust(self):
-        self.sounds.THRUST.pause()
-        self.sounds.THRUST.rewind()
         self.thrusting = False
  
     def turnRight(self):
         if self.fuel_level >= 0:
-            self.theta += 0.02
+            # self.theta += 0.02
+            self.angular_vel += 0.00003
+            self.sounds.HISS.play()
         
     def turnLeft(self):
         # print("turning left")
         if self.fuel_level >= 0:
-            self.theta -= 0.02
+            # self.theta -= 0.02
+            self.angular_vel -= 0.00003
+            self.sounds.HISS.play()
             
