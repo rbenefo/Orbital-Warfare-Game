@@ -1,10 +1,18 @@
 from Game import Game
 from Camera import Camera
 
+add_library("minim")
 height  = int(480*1.5)
 width = 640*2
 
 
+class Sounds:
+    def __init__(self):
+        self.THRUST = minim.loadFile("thrust.wav")
+        self.LASER = minim.loadFile("laser.wav")
+        self.CANNON = minim.loadFile("cannon.wav")
+    
+    
 
 scale_factor = 1
 xOffset = 0
@@ -18,8 +26,11 @@ def setup():
     by = height/2
     size(width, height)
     global img, game
+    global minim
+    minim = Minim(this)
+    sf = Sounds()
     img = loadImage("planet2.png")
-    game = Game(width, height, img)
+    game = Game(width, height, img, sf)
 
 
 def mouseWheel(event):

@@ -4,7 +4,6 @@ class Collision:
     def __init__(self):
         #further optimization-- implement quad trees 
         pass
-        
     
     def laser_coilgun_check(self, laser, coilgun_round):
         x1 = laser[0][0]
@@ -94,7 +93,6 @@ class Collision:
         else:
             x = cx
         if cy < rect_y:
-            
             y = rect_y
         elif cy > rect_y + space_craft.h:
             y = rect_y+space_craft.h
@@ -105,10 +103,7 @@ class Collision:
         c = PVector(cx, cy)
         distance = PVector.dist(v, c)
         
-        
         if distance < coilgun_round.s:
             collision = True
             
         return collision
-
-        

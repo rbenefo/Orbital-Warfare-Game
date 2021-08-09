@@ -5,7 +5,7 @@ from GUI import GUI
 
 
 class Game:
-    def __init__(self, width, height, img):
+    def __init__(self, width, height, img, Sounds):
         self.height  = height
         self.width = width
         
@@ -14,8 +14,10 @@ class Game:
         self.ships = {}
         self.ship_idx = -1
         
-        self.addShip(maxthrust = 0.0001, m = 10, pos = PVector(200, 240),vel = PVector(0, 0.015), rgb = color(255, 0, 255))
-        self.addShip(maxthrust = 0.0001, m = 10, pos = PVector(600, 240),vel = PVector(0.03, -0.01), rgb = color(255, 255, 255))
+        self.addShip(maxthrust = 0.0001, m = 10, pos = PVector(200, 240),vel = PVector(0, 0.015), \
+                     rgb = color(255, 0, 255), sounds = Sounds)
+        self.addShip(maxthrust = 0.0001, m = 10, pos = PVector(600, 240),vel = PVector(0.03, -0.01), \
+                     rgb = color(255, 255, 255), sounds = Sounds)
         
         self.planet = Planet(self.width/2, self.height/2, 100, m = 0.15, img = img)
         self.lastDraw = millis()
@@ -31,6 +33,8 @@ class Game:
             a, rm = self.physics.calcAccel(ship, self.planet)
             if rm:
                 ship.health = 0
+                ship.alive = False
+                ship.crashed = True
             ship_a_dict[idx] = a
         laser_dict = {}
         if keyPressed:
@@ -133,8 +137,8 @@ class Game:
                 self.gui.update_white_gui(heatpercent, healthpercent, fuelpercent)
                 
         
-    def addShip(self, maxthrust, m, pos, vel, rgb):
-        ship = SpaceCraft(maxthrust, m, pos, vel, rgb)
+    def addShip(self, maxthrust, m, pos, vel, rgb, sounds):
+        ship = SpaceCraft(maxthrust, m, pos, vel, rgb, sounds)
         self.ship_idx += 1
         self.ships[self.ship_idx] = ship
 
@@ -144,7 +148,14 @@ class Game:
             self.ships[0].turnOffThrust()
         if keyCode == SHIFT:
             self.ships[1].turnOffThrust()
-
+        if key == "e":
+            self.ships[0].sounds.LASER.rewind()
+        if key == ".":
+            self.ships[1].sounds.LASER.rewind()
+        if key == "q":
+            self.ships[0].sounds.CANNON.rewind()
+        if key == "/":
+            self.ships[1].sounds.CANNON.rewind()
 class PhysicsEngine:
     def __init__(self, width, height):
         self.G = 1 #gravitational constant
@@ -156,7 +167,7 @@ class PhysicsEngine:
         distance = r.mag()
         if distance <= planet.s/2:
             rm = True
-        if obj.type == "coilgun" and distance > 1000:
+        if obj.type == "coilgun" and distance > 5000:
             rm  = True
         a = -(self.G*planet.mass)/distance**2
         accel_vec = r.normalize().mult(a)
@@ -206,7 +217,10 @@ class DamageModel:
         return damage
     
     def laser_hit(self, relPos):
-        damage = 1.0/float(0.5*relPos)*0.001
+        try:
+            damage = 1.0/(0.5*float(relPos))*0.001
+        except ZeroDivisionError:
+            damage = 0
         if damage > 0.03:
             damage = 0.03
         return damage

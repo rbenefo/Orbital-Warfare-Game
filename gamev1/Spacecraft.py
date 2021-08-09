@@ -1,8 +1,9 @@
 from Coilgun import CoilgunRound
 import math
 
+
 class SpaceCraftPrimitive(object):
-    def __init__(self, pos, vel, rgb):
+    def __init__(self, pos, vel, rgb, sounds):
         self.pos= pos
         self.theta = 0
         self.vel = vel
@@ -23,15 +24,17 @@ class SpaceCraftPrimitive(object):
         self.disappation_constant = 0.003
         self.heating_constant = 0.01
         
-        self.health = 1
-        self.max_health = 1
+        self.health = 2
+        self.max_health = 2
         
         self.alive = True #alive
+        self.crashed = False
         self.type = "spacecraft"
         
         self.fuel_level = 2
         self.max_fuel = 2
-    
+        
+        self.sounds = sounds
     def fire(self):
         coilgun_pos = self.pos.copy()
         currHeadingVec = PVector.fromAngle(self.theta)
@@ -43,6 +46,7 @@ class SpaceCraftPrimitive(object):
         coilgun_round = CoilgunRound(coilgun_pos, coilgun_vel)
         self.coilgun_id += 1
         self.coilgun_rounds[self.coilgun_id] = coilgun_round
+        self.sounds.CANNON.play()
 
     def fireLaser(self):
         laser_beginning_pos = self.pos.copy()
@@ -57,53 +61,53 @@ class SpaceCraftPrimitive(object):
         #strokeCap(SQUARE)
         line(laser_beginning_pos[0], laser_beginning_pos[1], laser_ending_pos[0], laser_ending_pos[1]);
         self.heat += self.heating_constant
+        self.sounds.LASER.play()
         return laser_beginning_pos, laser_ending_pos
         
     def applyAccel(self, accel):
         self.accel = accel
 
     def draw(self):
-        self.heat -= self.disappation_constant*self.heat
-        if self.heat >= self.max_heat or self.health <= 0:
-            self.alive = False
-        pushMatrix()
-        translate(self.pos[0], self.pos[1])
-        rotate(self.theta)
-        noStroke()
-        
-        #Thruster burn
-        if self.thrusting:
+        if not self.crashed:
+            self.heat -= self.disappation_constant*self.heat
+            if self.heat >= self.max_heat or self.health <= 0:
+                self.alive = False
             pushMatrix()
-            fill(225, 165, 0)
-            translate(self.w/2, 0)
-            ellipse(0, 0, self.h*2, self.h)
+            translate(self.pos[0], self.pos[1])
+            rotate(self.theta)
+            noStroke()
+            
+            #Thruster burn
+            if self.thrusting:
+                pushMatrix()
+                fill(225, 165, 0)
+                translate(self.w/2, 0)
+                ellipse(0, 0, self.h*2, self.h)
+                popMatrix()
+            
+            pushMatrix()
+            if not self.hit:
+                fill(225, 226,227)
+            else:
+                fill(self.hit_color)
+            translate(-self.w/2, 0)
+            circle(0, 0, self.h)
             popMatrix()
-        
-        pushMatrix()
-        if not self.hit:
-            fill(225, 226,227)
-        else:
-            fill(self.hit_color)
-        translate(-self.w/2, 0)
-        circle(0, 0, self.h)
-        popMatrix()
-
-        if not self.hit and self.alive:
-            fill(self.color)
-        elif not self.hit and not self.alive:
-            fill(color(222, 222, 222))
-        else:
-            fill(self.hit_color)
-        rect(-self.w/2,-self.h/2, self.w, self.h)
-        # rect(self.pos[0], self.pos[1], self.w, self.h)
-        popMatrix()
-
-    def turnOffThrust(self):
-        self.thrusting = False
+    
+            if not self.hit and self.alive:
+                fill(self.color)
+            elif not self.hit and not self.alive:
+                fill(color(222, 222, 222))
+            else:
+                fill(self.hit_color)
+            rect(-self.w/2,-self.h/2, self.w, self.h)
+            # rect(self.pos[0], self.pos[1], self.w, self.h)
+            popMatrix()
+    
 
 class SpaceCraft(SpaceCraftPrimitive):
-    def __init__(self, maxthrust, m, x, y, rgb):
-        super(SpaceCraft, self).__init__(x, y, rgb)
+    def __init__(self, maxthrust, m, x, y, rgb, sounds):
+        super(SpaceCraft, self).__init__(x, y, rgb, sounds)
         self.maxthrust = maxthrust
         self.m  = m
         self.fuel_burn = 0.002
@@ -119,10 +123,17 @@ class SpaceCraft(SpaceCraftPrimitive):
             self.thrusting = True
             self.heat += self.heating_constant*0.5
             self.fuel_level -= self.fuel_burn
+            self.sounds.THRUST.play()
+
         else:
             accel_vec = PVector(0,0)
         return accel_vec
-            
+    
+    def turnOffThrust(self):
+        self.sounds.THRUST.pause()
+        self.sounds.THRUST.rewind()
+        self.thrusting = False
+ 
     def turnRight(self):
         if self.fuel_level >= 0:
             self.theta += 0.02
