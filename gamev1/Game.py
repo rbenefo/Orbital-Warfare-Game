@@ -190,6 +190,14 @@ class PhysicsEngine:
             rm  = True
         a = -(self.G*planet.mass)/distance**2
         accel_vec = r.normalize().mult(a)
+        if distance <= planet.atmosphere_radius/2 and not rm:
+            obj.reentering = True
+            drag_coeff = 0.00005
+            drag = PVector.mult(obj.vel, drag_coeff)
+            accel_vec = PVector.sub(accel_vec, drag)
+        else:
+            obj.reentering = False
+
         return accel_vec, rm
     def step(self, obj, dt):
         dv = obj.accel.mult(dt)

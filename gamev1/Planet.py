@@ -6,10 +6,14 @@ class Planet:
         self.mass = m
         self.img = img
         self.img.resize(self.s, self.s)
+        self.atmosphere_radius = self.s*1.2
 
         self.pg =createGraphics(self.s,self.s)
     def draw(self):
         noStroke()
+        fill(227, 247, 255) #later, use gradient for this
+        circle(self.pos[0], self.pos[1], self.atmosphere_radius)
+
         fill(175, 233, 255)
         circle(self.pos[0], self.pos[1], self.s)
         # self.pg.beginDraw()

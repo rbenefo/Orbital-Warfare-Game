@@ -35,6 +35,9 @@ class SpaceCraftPrimitive(object):
         self.max_fuel = 2
         self.angular_vel = 0
         
+        self.reentry_coloring = color(255, 163, 71)
+        # self.reentering = False
+        
         self.sounds = sounds
     def fire(self):
         coilgun_pos = self.pos.copy()
@@ -88,7 +91,10 @@ class SpaceCraftPrimitive(object):
             
             pushMatrix()
             if not self.hit:
-                fill(225, 226,227)
+                if not self.reentering:
+                    fill(225, 226,227)
+                else:
+                    fill(lerpColor(color(225, 226,22), self.reentry_coloring, 0.5))
             else:
                 fill(self.hit_color)
             translate(-self.w/2, 0)
@@ -96,9 +102,15 @@ class SpaceCraftPrimitive(object):
             popMatrix()
     
             if not self.hit and self.alive:
-                fill(self.color)
+                if not self.reentering:
+                    fill(self.color)
+                else:
+                    fill(lerpColor(self.color, self.reentry_coloring, 0.5))
             elif not self.hit and not self.alive:
-                fill(color(222, 222, 222))
+                if not self.reentering:
+                    fill(color(222, 222, 222))
+                else:
+                    fill(lerpColor(color(222, 222, 222), self.reentry_coloring, 0.5))
             else:
                 fill(self.hit_color)
             rect(-self.w/2,-self.h/2, self.w, self.h)
