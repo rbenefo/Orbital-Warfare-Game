@@ -36,7 +36,9 @@ class SpaceCraftPrimitive(object):
         self.angular_vel = 0
         
         self.reentry_coloring = color(255, 163, 71)
-        # self.reentering = False
+        self.reentering = False
+        
+        self.atmospheric_heating_constant = 0.2
         
         self.sounds = sounds
     def fire(self):
@@ -72,6 +74,8 @@ class SpaceCraftPrimitive(object):
         self.accel = accel
 
     def draw(self):
+        if self.reentering:
+            self.heat += self.atmospheric_heating_constant*self.vel.mag()
         if not self.crashed:
             self.heat -= self.disappation_constant*self.heat
             if self.heat >= self.max_heat or self.health <= 0:
@@ -80,7 +84,7 @@ class SpaceCraftPrimitive(object):
             translate(self.pos[0], self.pos[1])
             rotate(self.theta)
             noStroke()
-            
+        
             #Thruster burn
             if self.thrusting:
                 pushMatrix()

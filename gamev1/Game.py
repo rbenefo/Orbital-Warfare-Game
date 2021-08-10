@@ -16,8 +16,8 @@ class Game:
         
         self.addShip(maxthrust = 0.0001, m = 10, pos = PVector(200, 240),vel = PVector(0, 0.015), \
                      rgb = color(255, 0, 255), sounds = Sounds)
-        self.addShip(maxthrust = 0.0001, m = 10, pos = PVector(600, 240),vel = PVector(0.03, -0.01), \
-                     rgb = color(255, 255, 255), sounds = Sounds)
+        self.addShip(maxthrust = 0.0001, m = 10, pos = PVector(600, 240),vel = PVector(0.033, -0.01), \
+                     rgb = color(163, 235, 155), sounds = Sounds)
         
         self.planet = Planet(self.width/2, self.height/2, 100, m = 0.15, img = img)
         self.lastDraw = millis()
@@ -127,10 +127,10 @@ class Game:
                         ship.hit = True
                         ship.health -= damage
         for idx, ship in self.ships.items():
-            ship.draw()
             ship.hit = False
             if ship.alive:
                 self.physics.drawPath(ship, self.planet) #later optimization-- only draw path if thrust has been executed?
+            ship.draw()
         self.lastDraw = m
 
     def updateGUI(self):
@@ -140,9 +140,9 @@ class Game:
             fuelpercent = ship.fuel_level/ship.max_fuel
 
             if idx == 0:
-                self.gui.update_pink_gui(heatpercent, healthpercent, fuelpercent)
+                self.gui.update_ship0_gui(heatpercent, healthpercent, fuelpercent)
             else:
-                self.gui.update_white_gui(heatpercent, healthpercent, fuelpercent)
+                self.gui.update_ship1_gui(heatpercent, healthpercent, fuelpercent)
                 
         
     def addShip(self, maxthrust, m, pos, vel, rgb, sounds):
@@ -193,7 +193,11 @@ class PhysicsEngine:
         if distance <= planet.atmosphere_radius/2 and not rm:
             obj.reentering = True
             drag_coeff = 0.00005
-            drag = PVector.mult(obj.vel, drag_coeff)
+            density = 50.0/(distance+5-planet.s/2)
+            drag_constant = density*drag_coeff
+            # print(drag_constant)
+            drag = PVector.mult(obj.vel, drag_constant)
+            print(drag, accel_vec)
             accel_vec = PVector.sub(accel_vec, drag)
         else:
             obj.reentering = False

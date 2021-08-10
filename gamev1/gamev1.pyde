@@ -26,11 +26,12 @@ def setup():
     bx = width/2
     by = height/2
     size(width, height)
-    global img, game
+    global img, game, bg
     global minim
     minim = Minim(this)
     sf = Sounds()
-    img = loadImage("planet2.png")
+    img = loadImage("planet3.png")
+    bg = loadImage("stars.png")
     game = Game(width, height, img, sf)
 
 
@@ -56,8 +57,10 @@ def keyReleased():
     game.handleKeyReleased(key)
 
 def draw():
-    background(0,0,0)
-    game.updateGUI()
+    background(bg)
+    pushMatrix()
     translate(bx, by)
     scale(scale_factor)
     game.draw(keyPressed)
+    popMatrix()
+    game.updateGUI()
