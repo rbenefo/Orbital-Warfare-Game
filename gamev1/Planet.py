@@ -4,21 +4,23 @@ class Planet:
         self.s = int(s*1.5)
         
         self.mass = m
-        self.img = img
+        self.img = img.PLANET
         self.img.resize(self.s, self.s)
         self.atmosphere_radius = int(self.s*1.3)
-
-        self.pg =createGraphics(self.s,self.s)
+        
     def draw(self):
         noStroke()
-        # fill(227, 247, 255) #later, use gradient for this
         h = self.atmosphere_radius - self.s
-        for i in range(self.atmosphere_radius, self.s, -1):
-            fill(lerpColor(color(156, 227, 255),color(0,0,0), float(i-self.s)/float(h)))
+        for i in range(self.atmosphere_radius, 0, -1):
+            if i < self.s-10:
+                fill(color(3,3,22))
+            else:
+                fill(lerpColor(color(252, 82, 255),color(3,3,22), float(i-self.s)/float(h)))
+
             circle(self.pos[0], self.pos[1], i)
 
-        fill(175, 233, 255)
-        circle(self.pos[0], self.pos[1], self.s)
+        # fill(175, 233, 255)
+        # circle(self.pos[0], self.pos[1], self.s)
         # self.pg.beginDraw()
         # self.pg.noStroke()
         # self.pg.background(0)

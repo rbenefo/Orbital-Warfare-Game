@@ -15,16 +15,16 @@ class Game:
         self.ship_idx = -1
         
         self.addShip(maxthrust = 0.0001, m = 10, pos = PVector(200, 240),vel = PVector(0, 0.015), \
-                     rgb = color(255, 0, 255), sounds = Sounds)
+            sounds = Sounds, img = img, p = 0)
         self.addShip(maxthrust = 0.0001, m = 10, pos = PVector(600, 240),vel = PVector(0.033, -0.01), \
-                     rgb = color(163, 235, 155), sounds = Sounds)
+                     sounds = Sounds, img = img, p = 1)
         
         self.planet = Planet(self.width/2, self.height/2, 100, m = 0.15, img = img)
         self.lastDraw = millis()
         
         self.collision = Collision()
         self.damageModel = DamageModel()
-        self.gui = GUI(width, height)
+        self.gui = GUI(width, height, img)
         
     def draw(self, keyPressed):
         self.planet.draw()
@@ -145,8 +145,8 @@ class Game:
                 self.gui.update_ship1_gui(heatpercent, healthpercent, fuelpercent)
                 
         
-    def addShip(self, maxthrust, m, pos, vel, rgb, sounds):
-        ship = SpaceCraft(maxthrust, m, pos, vel, rgb, sounds)
+    def addShip(self, maxthrust, m, pos, vel, sounds, img, p):
+        ship = SpaceCraft(maxthrust, m, pos, vel, sounds, img, p)
         self.ship_idx += 1
         self.ships[self.ship_idx] = ship
 
@@ -197,7 +197,6 @@ class PhysicsEngine:
             drag_constant = density*drag_coeff
             # print(drag_constant)
             drag = PVector.mult(obj.vel, drag_constant)
-            print(drag, accel_vec)
             accel_vec = PVector.sub(accel_vec, drag)
         else:
             obj.reentering = False

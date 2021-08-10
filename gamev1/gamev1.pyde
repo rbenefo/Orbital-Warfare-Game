@@ -13,6 +13,16 @@ class Sounds:
         self.CANNON = minim.loadFile("cannon.wav")
         self.HISS = minim.loadFile("hiss.wav")
     
+class Images:
+    def __init__(self):
+        self.PLANET = loadImage("planet5.png")
+        self.INDICATOR = loadImage("indicator1.png")
+        self.INDICATOR_BASE = loadImage("indicator_base.png")
+        self.INDICATOR_ELLIPSE = loadImage("indicator_ellipse.png")
+        self.SPACECRAFT_BODY_0 = loadImage("spacecraft_body_0.png")
+        self.SPACECRAFT_HEAD_0 = loadImage("spacecraft_head_0.png")
+        self.SPACECRAFT_BODY_1 = loadImage("spacecraft_body_1.png")
+        self.SPACECRAFT_HEAD_1 = loadImage("spacecraft_head_1.png")
     
 
 scale_factor = 1
@@ -30,8 +40,9 @@ def setup():
     global minim
     minim = Minim(this)
     sf = Sounds()
-    img = loadImage("planet3.png")
-    bg = loadImage("stars.png")
+    img = Images()
+    bg = loadImage("background.png")
+    bg.resize(width, height)
     game = Game(width, height, img, sf)
 
 
@@ -58,6 +69,7 @@ def keyReleased():
 
 def draw():
     background(bg)
+    # background(5, 3, 28)
     pushMatrix()
     translate(bx, by)
     scale(scale_factor)

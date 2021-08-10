@@ -3,14 +3,21 @@ import math
 
 
 class SpaceCraftPrimitive(object):
-    def __init__(self, pos, vel, rgb, sounds):
+    def __init__(self, pos, vel, sounds, img, p):
         self.pos= pos
         self.theta = 0
         self.vel = vel
         self.accel = PVector(0,0)
         self.h = 8
         self.w = 20
-        self.color = rgb
+        if p == 0:
+            self.img_body = img.SPACECRAFT_BODY_0
+        else:
+            self.img_body = img.SPACECRAFT_BODY_1
+        if p == 0:
+            self.img_head = img.SPACECRAFT_HEAD_0
+        else:
+            self.img_head = img.SPACECRAFT_HEAD_1
         self.thrusting = False
         
         self.coilgun_rounds = {}
@@ -95,36 +102,39 @@ class SpaceCraftPrimitive(object):
             
             pushMatrix()
             if not self.hit:
-                if not self.reentering:
-                    fill(225, 226,227)
-                else:
-                    fill(lerpColor(color(225, 226,22), self.reentry_coloring, 0.5))
+                if self.reentering:
+                    tint(self.reentry_coloring)
             else:
-                fill(self.hit_color)
+                tint(self.hit_color)
             translate(-self.w/2, 0)
-            circle(0, 0, self.h)
+            imageMode(CENTER)
+            rotate(-PI/2)
+            image(self.img_head, 0,0, self.h, self.h)
+            noTint()
+            # circle(0, 0, self.h)
             popMatrix()
     
             if not self.hit and self.alive:
-                if not self.reentering:
-                    fill(self.color)
-                else:
-                    fill(lerpColor(self.color, self.reentry_coloring, 0.5))
+                if self.reentering:
+                    tint(self.reentry_coloring)
             elif not self.hit and not self.alive:
                 if not self.reentering:
-                    fill(color(222, 222, 222))
+                    tint(color(222, 222, 222))
                 else:
-                    fill(lerpColor(color(222, 222, 222), self.reentry_coloring, 0.5))
+                    tint(self.reentry_coloring)
             else:
-                fill(self.hit_color)
-            rect(-self.w/2,-self.h/2, self.w, self.h)
-            # rect(self.pos[0], self.pos[1], self.w, self.h)
+                tint(self.hit_color)
+            imageMode(CENTER)
+            rotate(-PI/2)
+            image(self.img_body, 0,0, self.h, self.w)
+            noTint()
+            # rect(-self.w/2,-self.h/2, self.w, self.h)
             popMatrix()
     
 
 class SpaceCraft(SpaceCraftPrimitive):
-    def __init__(self, maxthrust, m, x, y, rgb, sounds):
-        super(SpaceCraft, self).__init__(x, y, rgb, sounds)
+    def __init__(self, maxthrust, m, x, y, sounds, img, p):
+        super(SpaceCraft, self).__init__(x, y, sounds, img, p)
         self.maxthrust = maxthrust
         self.m  = m
         self.fuel_burn = 0.002
