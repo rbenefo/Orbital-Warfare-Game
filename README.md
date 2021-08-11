@@ -6,7 +6,7 @@ Basic 2D orbital warfare game with Newtonian physics, inspired by John Lumpkin's
 The Pink ship and Blue ship are battling it out high above Planet Aval. Each ship has a laser and coilgun. Ships flash red when they're hit, and have limited fuel, health, and heat capacity.
 
 <div align="center">
-  <a href="https://www.youtube.com/watch?v=MvSuVTR33Zs"><img src="https://img.youtube.com/vi/MvSuVTR33Zs/0.jpg" alt="Sample Video"></a>
+  <a href="https://www.youtube.com/watch?v=CqLv_qFNHqY"><img src="https://img.youtube.com/vi/CqLv_qFNHqY/0.jpg" alt="Sample Video"></a>
 </div>
 
 
