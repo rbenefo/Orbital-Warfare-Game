@@ -12,6 +12,7 @@ class Sounds:
         self.LASER = minim.loadFile("laser.wav")
         self.CANNON = minim.loadFile("cannon.wav")
         self.HISS = minim.loadFile("hiss.wav")
+        self.bg = minim.loadFile("quiescent-in-time.mp3")
     
 class Images:
     def __init__(self):
@@ -44,6 +45,8 @@ def setup():
     bg = loadImage("background.png")
     bg.resize(width, height)
     game = Game(width, height, img, sf)
+    sf.bg.play()
+    sf.bg.loop()
 
 
 def mouseWheel(event):
