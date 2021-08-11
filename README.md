@@ -42,5 +42,6 @@ Lasers and coilguns deal the same amount of damage; however, coilguns are slow w
 ## Acknowledgements
 - Sound from Zapsplat
 - Glass Planet inspired by [Brenttton on Dribble](https://dribbble.com/shots/3221153-Fantastic-Planet-001)
+- John J. Lumpkin, author of the amazing book series ["The Human Reach"](http://www.thehumanreach.net/). Thanks John, for inspiring me to look to the stars.
 
 Enjoy!
