@@ -40,8 +40,9 @@ This was created using [Processing.py](https://py.processing.org/); to play, dow
 Lasers and coilguns deal the same amount of damage; however, coilguns are slow while lasers arrive instantaneously. Since lasers can destroy incoming coilgun shells, a useful tactic (taken straight from John Lumpkin's books), is to think about coilguns as creating "terrain" that the enemy ship needs to navigate. To prevent the enemy ship from bringing its laser to bear on you, send some coilgun shells their way to force them either to turn and thrust to dodge, or turn and fire directly at the incoming shells.
 
 ## Acknowledgements
-- Sound from Zapsplat
+- Sound effects from Zapsplat
 - Glass Planet inspired by [Brenttton on Dribble](https://dribbble.com/shots/3221153-Fantastic-Planet-001)
+- Music: Quiescent In Time by Shane Ivers - https://www.silvermansound.com
 - John J. Lumpkin, author of the amazing book series ["The Human Reach"](http://www.thehumanreach.net/). Thanks John, for inspiring me to look to the stars.
 
 Enjoy!
