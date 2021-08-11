@@ -3,10 +3,10 @@ Basic 2D orbital warfare game with Newtonian physics, inspired by John Lumpkin's
 
 
 ## About
-The Pink ship and White ship are battling it out high above Earth. Each ship has a laser and coilgun. Ships flash red when they're hit, and have limited fuel, health, and heat capacity.
+The Pink ship and Blue ship are battling it out high above Planet Aval. Each ship has a laser and coilgun. Ships flash red when they're hit, and have limited fuel, health, and heat capacity.
 
 <div align="center">
-  <a href="https://www.youtube.com/watch?v=VJlpbi24f_g"><img src="https://img.youtube.com/vi/VJlpbi24f_g/0.jpg" alt="Sample Video"></a>
+  <a href="https://www.youtube.com/watch?v=SnxfO4zLmt4"><img src="https://img.youtube.com/vi/SnxfO4zLmt4/0.jpg" alt="Sample Video"></a>
 </div>
 
 
@@ -41,5 +41,6 @@ Lasers and coilguns deal the same amount of damage; however, coilguns are slow w
 
 ## Acknowledgements
 - Sound from Zapsplat
+- Glass Planet inspired by [Brenttton on Dribble](https://dribbble.com/shots/3221153-Fantastic-Planet-001)
 
 Enjoy!
