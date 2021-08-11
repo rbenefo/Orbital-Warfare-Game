@@ -15,7 +15,7 @@ class Planet:
             if i < self.s-10:
                 fill(color(3,3,22))
             else:
-                fill(lerpColor(color(252, 82, 255),color(3,3,22), float(i-self.s)/float(h)))
+                fill(lerpColor(color(252, 82, 255),color(3,3,22,0), float(i-self.s)/float(h)))
 
             circle(self.pos[0], self.pos[1], i)
 

@@ -10,7 +10,7 @@ class Sounds:
     def __init__(self):
         self.THRUST = minim.loadFile("thrust.wav")
         self.LASER = minim.loadFile("laser.wav")
-        self.CANNON = minim.loadFile("cannon.wav")
+        self.CANNON = minim.loadFile("cannon.mp3")
         self.HISS = minim.loadFile("hiss.wav")
         self.bg = minim.loadFile("quiescent-in-time.mp3")
     
