@@ -209,11 +209,12 @@ class PhysicsEngine:
         if obj.type == "spacecraft":
             obj.theta += obj.angular_vel*dt
             damping_const = 0.000005
-            if obj.angular_vel < 0:
-                obj.angular_vel+=  damping_const
-            elif obj.angular_vel > 0:
-                obj.angular_vel-=  damping_const
-
+            if obj.alive:
+                if obj.angular_vel < 0:
+                    obj.angular_vel+=  damping_const
+                elif obj.angular_vel > 0:
+                    obj.angular_vel-=  damping_const
+    
 
     def drawPath(self, obj, planet):
         mu = self.G*planet.mass
