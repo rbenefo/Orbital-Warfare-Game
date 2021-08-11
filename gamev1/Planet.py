@@ -19,14 +19,5 @@ class Planet:
 
             circle(self.pos[0], self.pos[1], i)
 
-        # fill(175, 233, 255)
-        # circle(self.pos[0], self.pos[1], self.s)
-        # self.pg.beginDraw()
-        # self.pg.noStroke()
-        # self.pg.background(0)
-        # self.pg.fill(255)
-        # self.pg.ellipse(self.s/2, self.s/2, self.s, self.s)
-        # self.pg.endDraw()
-        # self.img.mask(self.pg.get())
         imageMode(CENTER)
         image(self.img, self.pos[0],self.pos[1])

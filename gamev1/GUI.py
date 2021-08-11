@@ -14,7 +14,7 @@ class GUI:
         self.indicator_border = color(253, 150, 115)
         self.indicator_thickness = 5
         self.indicator_transparency = 200
-        kiona = createFont("Kiona-Regular.ttf", 10)
+        kiona = createFont("Kiona-Regular.ttf", 12)
         textFont(kiona)
 
         
@@ -25,7 +25,7 @@ class GUI:
         imageMode(CENTER)
         image(self.indicator_base, 0,0)
         fill(255,255,255)
-        text("Temperature", -40, 70)
+        text("Temperature", -45, 70)
 
         angle = 2*PI*(1-heatpercentage)-PI
         
@@ -45,7 +45,7 @@ class GUI:
         image(self.indicator_base, 0,0)
 
         fill(255,255,255)
-        text("Health", -20, 70)
+        text("Health", -24, 70)
 
         angle = 2*PI*(1-healthpercentage)-PI
         rotate(angle/2)
@@ -64,7 +64,7 @@ class GUI:
         imageMode(CENTER)
         image(self.indicator_base, 0,0)
         fill(255,255,255)
-        text("Fuel", -12, 70)
+        text("Fuel", -16, 70)
 
         angle = 2*PI*(1-fuelpercentage)-PI
         rotate(angle/2)
@@ -86,7 +86,7 @@ class GUI:
         image(self.indicator_base, 0,0)
 
         fill(255,255,255)
-        text("Temperature", -40, 70)
+        text("Temperature", -45, 70)
 
         angle = 2*PI*(1-heatpercentage)-PI
         rotate(angle/2)
@@ -106,7 +106,7 @@ class GUI:
         image(self.indicator_base, 0,0)
 
         fill(255,255,255)
-        text("Health", -20, 70)
+        text("Health", -24, 70)
 
         angle = 2*PI*(1-healthpercentage)-PI
         rotate(angle/2)
@@ -126,7 +126,7 @@ class GUI:
         image(self.indicator_base, 0,0)
 
         fill(255,255,255)
-        text("Fuel", -12, 70)
+        text("Fuel", -16, 70)
 
         angle = 2*PI*(1-fuelpercentage)-PI
         rotate(angle/2)

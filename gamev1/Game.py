@@ -127,10 +127,10 @@ class Game:
                         ship.hit = True
                         ship.health -= damage
         for idx, ship in self.ships.items():
-            ship.hit = False
             if ship.alive:
                 self.physics.drawPath(ship, self.planet) #later optimization-- only draw path if thrust has been executed?
             ship.draw()
+            ship.hit = False
         self.lastDraw = m
 
     def updateGUI(self):
@@ -193,9 +193,8 @@ class PhysicsEngine:
         if distance <= planet.atmosphere_radius/2 and not rm:
             obj.reentering = True
             drag_coeff = 0.00005
-            density = 50.0/(distance+5-planet.s/2)
+            density = 50.0/(distance+50-planet.s/2)
             drag_constant = density*drag_coeff
-            # print(drag_constant)
             drag = PVector.mult(obj.vel, drag_constant)
             accel_vec = PVector.sub(accel_vec, drag)
         else:
@@ -250,7 +249,8 @@ class DamageModel:
     def __init__(self):
         pass
     def coilgun_hit(self, relVel):
-        damage = relVel*1
+        damage = relVel*5
+        print(relVel)
         return damage
     
     def laser_hit(self, relPos):

@@ -45,21 +45,25 @@ class SpaceCraftPrimitive(object):
         self.reentry_coloring = color(255, 163, 71)
         self.reentering = False
         
-        self.atmospheric_heating_constant = 0.2
+        self.atmospheric_heating_constant = 0.06
         
         self.sounds = sounds
+        
+        self.coilgun_rounds_remaining = 100
     def fire(self):
-        coilgun_pos = self.pos.copy()
-        currHeadingVec = PVector.fromAngle(self.theta)
-        currHeadingVec.rotate(PI)
-        shift = PVector.mult(currHeadingVec, self.w/2+10)
-        coilgun_pos.add(shift)
-        coilgun_vel = currHeadingVec.mult(0.04)
-        coilgun_vel.add(self.vel)
-        coilgun_round = CoilgunRound(coilgun_pos, coilgun_vel)
-        self.coilgun_id += 1
-        self.coilgun_rounds[self.coilgun_id] = coilgun_round
-        self.sounds.CANNON.play()
+        if self.coilgun_rounds_remaining > 0:
+            coilgun_pos = self.pos.copy()
+            currHeadingVec = PVector.fromAngle(self.theta)
+            currHeadingVec.rotate(PI)
+            shift = PVector.mult(currHeadingVec, self.w/2+10)
+            coilgun_pos.add(shift)
+            coilgun_vel = currHeadingVec.mult(0.04)
+            coilgun_vel.add(self.vel)
+            coilgun_round = CoilgunRound(coilgun_pos, coilgun_vel)
+            self.coilgun_id += 1
+            self.coilgun_rounds[self.coilgun_id] = coilgun_round
+            self.sounds.CANNON.play()
+            self.coilgun_rounds_remaining -= 1
 
     def fireLaser(self):
         laser_beginning_pos = self.pos.copy()
@@ -99,8 +103,8 @@ class SpaceCraftPrimitive(object):
                 translate(self.w/2, 0)
                 ellipse(0, 0, self.h*2, self.h)
                 popMatrix()
-            
             pushMatrix()
+            
             if not self.hit:
                 if self.reentering:
                     tint(self.reentry_coloring)
@@ -119,7 +123,7 @@ class SpaceCraftPrimitive(object):
                     tint(self.reentry_coloring)
             elif not self.hit and not self.alive:
                 if not self.reentering:
-                    tint(color(222, 222, 222))
+                    tint(color(64, 64, 64))
                 else:
                     tint(self.reentry_coloring)
             else:
@@ -128,7 +132,6 @@ class SpaceCraftPrimitive(object):
             rotate(-PI/2)
             image(self.img_body, 0,0, self.h, self.w)
             noTint()
-            # rect(-self.w/2,-self.h/2, self.w, self.h)
             popMatrix()
     
 
@@ -161,14 +164,28 @@ class SpaceCraft(SpaceCraftPrimitive):
  
     def turnRight(self):
         if self.fuel_level >= 0:
-            # self.theta += 0.02
+            pushMatrix()
+            translate(self.pos[0], self.pos[1])
+            rotate(self.theta)
+            translate(-self.w/3, 0)
+            rotate(PI/2)
+            stroke(255, 255, 255)
+            line(0, 0, 5, 0)
+            popMatrix()            
             self.angular_vel += 0.00003
             self.sounds.HISS.play()
         
     def turnLeft(self):
         # print("turning left")
         if self.fuel_level >= 0:
-            # self.theta -= 0.02
+            pushMatrix()
+            translate(self.pos[0], self.pos[1])
+            rotate(self.theta)
+            translate(-self.w/3, 0)
+            rotate(-PI/2)
+            stroke(255, 255, 255)
+            line(0, 0, 5, 0)
+            popMatrix()            
             self.angular_vel -= 0.00003
             self.sounds.HISS.play()
             
